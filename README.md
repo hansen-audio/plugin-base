@@ -7,8 +7,12 @@ Combine libraries to get a plug-in base.
 ### Dependency map
 
 ```
-fx-collection
+plugin-base
 +-- aligned-allocator
++-- audio-modules
+|   +-- fx-collection
+|   |   +-- dsp-tool-box
+|   +-- param-tool-box 
 +-- googletest
 +-- kompositum
 +-- vst3sdk
