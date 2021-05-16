@@ -22,10 +22,6 @@ bool copy_inputs(i32 begin,
 {
     context.m_process_data.num_samples = numSamples;
 
-    if (processData.processContext)
-        context.m_process_data.project_time_music =
-            processData.processContext->projectTimeMusic;
-
     for (i32 bi = 0; bi < context.m_process_data.inputs.size(); ++bi)
     {
         if (processData.inputs)
@@ -108,6 +104,18 @@ bool copy_process_context(Steinberg::Vst::ProcessData& processData,
     context.m_process_data.continous_time_samples =
         is_valid ? pc->continousTimeSamples : 0;
 
+    is_valid =
+        pc->state & Steinberg::Vst::ProcessContext::kProjectTimeMusicValid;
+    if (is_valid)
+    {
+        project_time_simulator::update(context.project_time_cx,
+                                       pc->projectTimeMusic,
+                                       context.m_process_data.tempo);
+    }
+
+    context.m_process_data.project_time_music =
+        project_time_simulator::get_project_time_music(context.project_time_cx);
+
     return true;
 }
 
@@ -164,6 +172,8 @@ bool process(common::context& context)
         });
 
     context.m_component->accept(process_audio_visitor);
+    project_time_simulator::increment(context.project_time_cx,
+                                      context.m_process_data.num_samples);
 
     return true;
 }
