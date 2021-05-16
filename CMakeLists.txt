@@ -10,6 +10,8 @@ add_library(plugin-base STATIC
     include/ha/plugin_base/vst3/component/audio_setup.h
     include/ha/plugin_base/vst3/controller/generic_param.h
     source/common/context.cpp
+    source/common/project_time_simulator.cpp
+    source/common/project_time_simulator.h
     source/vst3/common/param_id.cpp
     source/vst3/common/param_id.h
     source/vst3/component/audio_processing.cpp
