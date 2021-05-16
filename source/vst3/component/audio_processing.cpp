@@ -22,6 +22,10 @@ bool copy_inputs(i32 begin,
 {
     context.m_process_data.num_samples = numSamples;
 
+    if (processData.processContext)
+        context.m_process_data.project_time_music =
+            processData.processContext->projectTimeMusic;
+
     for (i32 bi = 0; bi < context.m_process_data.inputs.size(); ++bi)
     {
         if (processData.inputs)
@@ -38,12 +42,14 @@ bool copy_inputs(i32 begin,
                 if (ci >= vst_bus.numChannels)
                     continue;
 
-                Steinberg::Vst::Sample32* vst_channel = vst_bus.channelBuffers32[ci];
+                Steinberg::Vst::Sample32* vst_channel =
+                    vst_bus.channelBuffers32[ci];
                 if (!vst_channel)
                     continue;
 
                 channel.resize(numSamples);
-                channel.assign(vst_channel + begin, vst_channel + begin + numSamples);
+                channel.assign(vst_channel + begin,
+                               vst_channel + begin + numSamples);
             }
         }
     }
@@ -73,7 +79,8 @@ bool copy_outputs(i32 begin,
                 if (ci >= vst_bus.numChannels)
                     continue;
 
-                Steinberg::Vst::Sample32* vst_channel = vst_bus.channelBuffers32[ci];
+                Steinberg::Vst::Sample32* vst_channel =
+                    vst_bus.channelBuffers32[ci];
                 if (!vst_channel)
                     continue;
 
@@ -87,17 +94,19 @@ bool copy_outputs(i32 begin,
 }
 
 //-----------------------------------------------------------------------------
-bool copy_process_context(Steinberg::Vst::ProcessData& processData, common::context& context)
+bool copy_process_context(Steinberg::Vst::ProcessData& processData,
+                          common::context& context)
 {
     Steinberg::Vst::ProcessContext* pc = processData.processContext;
     if (!pc)
         return false;
 
-    bool is_valid                = pc->state & Steinberg::Vst::ProcessContext::kTempoValid;
+    bool is_valid = pc->state & Steinberg::Vst::ProcessContext::kTempoValid;
     context.m_process_data.tempo = is_valid ? pc->tempo : 120.;
 
     is_valid = pc->state & Steinberg::Vst::ProcessContext::kContTimeValid;
-    context.m_process_data.continous_time_samples = is_valid ? pc->continousTimeSamples : 0;
+    context.m_process_data.continous_time_samples =
+        is_valid ? pc->continousTimeSamples : 0;
 
     return true;
 }
@@ -111,20 +120,25 @@ bool copy_param_changes(i32 begin,
     if (processData.inputParameterChanges)
     {
         context.m_process_data.mod_data.pin_datas.clear();
-        Steinberg::int32 numParamsChanged = processData.inputParameterChanges->getParameterCount();
+        Steinberg::int32 numParamsChanged =
+            processData.inputParameterChanges->getParameterCount();
         for (Steinberg::int32 index = 0; index < numParamsChanged; index++)
         {
-            if (auto* paramQueue = processData.inputParameterChanges->getParameterData(index))
+            if (auto* paramQueue =
+                    processData.inputParameterChanges->getParameterData(index))
             {
                 Steinberg::Vst::ParamValue value = 0.;
                 Steinberg::int32 sampleOffset    = 0;
                 Steinberg::int32 const numPoints = paramQueue->getPointCount();
-                if (paramQueue->getPoint(0, sampleOffset, value) != Steinberg::kResultOk)
+                if (paramQueue->getPoint(0, sampleOffset, value) !=
+                    Steinberg::kResultOk)
                     continue;
 
-                Steinberg::Vst::ParamID const paramId  = paramQueue->getParameterId();
-                Steinberg::Vst::UnitID const unitId    = paramId << 16;
-                audio_modules::tag_type const paramTag = extract_param_tag(paramId);
+                Steinberg::Vst::ParamID const paramId =
+                    paramQueue->getParameterId();
+                Steinberg::Vst::UnitID const unitId = paramId << 16;
+                audio_modules::tag_type const paramTag =
+                    extract_param_tag(paramId);
                 context.m_process_data.mod_data.pin_datas.push_back(
                     {paramTag, static_cast<float>(value)});
             }
@@ -155,7 +169,8 @@ bool process(common::context& context)
 }
 
 //-----------------------------------------------------------------------------
-bool process_audio(common::context& context, Steinberg::Vst::ProcessData& processData)
+bool process_audio(common::context& context,
+                   Steinberg::Vst::ProcessData& processData)
 {
     copy_param_changes(0, 0, processData, context);
     copy_process_context(processData, context);
