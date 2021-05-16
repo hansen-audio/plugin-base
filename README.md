@@ -1,8 +1,8 @@
 # Plug-in Base Library
 
-## Motivation
+## Summary
 
-Combine libraries to get a plug-in base. 
+Combine libraries to get a plug-in base. This library is still experimental and to be used in order to try things out.
 
 ### Dependency map
 
@@ -35,7 +35,9 @@ cmake --build .
 CMake geneartors for all platforms.
 
 * Linux: ```cmake -DCMAKE_BUILD_TYPE=[Debug|Release] ...```
+
 * macOS: ```cmake -GXcode ...```
+
 * Windows 10: ```cmake -G"Visual Studio 16 2019" -A x64 ...```
 
 ## License
