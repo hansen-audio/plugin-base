@@ -1,5 +1,7 @@
 # Plug-in Base Library
 
+[![CMake (Linux, macOS, Windows)](https://github.com/hansen-audio/plugin-base/actions/workflows/cmake.yml/badge.svg)](https://github.com/hansen-audio/plugin-base/actions/workflows/cmake.yml)
+
 ## Summary
 
 Combine libraries to get a plug-in base. This library is still experimental and to be used in order to try things out.
