@@ -175,6 +175,9 @@ bool process(common::context& context)
     project_time_simulator::increment(context.project_time_cx,
                                       context.m_process_data.num_samples);
 
+    context.m_process_data.project_time_music =
+        project_time_simulator::get_project_time_music(context.project_time_cx);
+
     return true;
 }
 
