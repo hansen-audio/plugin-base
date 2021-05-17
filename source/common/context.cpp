@@ -45,6 +45,7 @@ void setup_processing(common::context& cx, audio_modules::process_setup& setup)
         });
 
     cx.m_component->accept(process_setup_visitor);
+    cx.m_process_data.sample_rate = setup.sample_rate;
     project_time_simulator::set_sample_rate(cx.project_time_cx,
                                             setup.sample_rate);
 }
