@@ -31,8 +31,8 @@ void update_tempo(project_time_simulator::context& cx, real tempo)
     if (tempo == cx.m_tempo)
         return;
 
-    recalc_samples_per_beat_inverted(cx);
     cx.m_tempo = tempo;
+    recalc_samples_per_beat_inverted(cx);
 }
 
 //-----------------------------------------------------------------------------
