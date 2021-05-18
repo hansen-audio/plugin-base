@@ -12,19 +12,6 @@ void recalc_samples_per_beat_inverted(project_time_simulator::context& cx)
 }
 
 //-----------------------------------------------------------------------------
-void update_project_time_music(project_time_simulator::context& cx,
-                               real project_time_music)
-{
-    // When the transports project_time_music from host does not change
-    // we assume that transport has stopped.
-    if (cx.project_time_music == project_time_music)
-        return;
-
-    cx.project_time_music     = project_time_music;
-    cx.simulated_project_time = project_time_music;
-}
-
-//-----------------------------------------------------------------------------
 void update_tempo(project_time_simulator::context& cx, real tempo)
 {
     if (tempo == cx.tempo)
@@ -53,31 +40,22 @@ void project_time_simulator::set_sample_rate(context& cx, real sample_rate)
 }
 
 //-----------------------------------------------------------------------------
-void project_time_simulator::update(context& cx,
+real project_time_simulator::update(context& cx,
                                     double project_time_music,
                                     double tempo)
 {
-    update_project_time_music(cx, static_cast<real>(project_time_music));
     update_tempo(cx, static_cast<real>(tempo));
+    return project_time_music;
 }
 
 //-----------------------------------------------------------------------------
-real project_time_simulator::get_project_time_music(context const& cx)
+real project_time_simulator::advance(context& cx,
+                                     real project_time_music,
+                                     i32 block_size)
 {
-    return cx.simulated_project_time;
-}
 
-//-----------------------------------------------------------------------------
-void project_time_simulator::increment(context& cx, i32 block_size)
-{
-    cx.simulated_project_time +=
-        static_cast<real>(block_size) * cx.samples_per_beat_inverted;
-}
-
-//-----------------------------------------------------------------------------
-void project_time_simulator::reset(context& cx)
-{
-    cx.simulated_project_time = 0;
+    real delta = static_cast<real>(block_size) * cx.samples_per_beat_inverted;
+    return project_time_music + delta;
 }
 
 //-----------------------------------------------------------------------------

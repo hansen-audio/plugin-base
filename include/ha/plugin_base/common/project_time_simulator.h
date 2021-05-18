@@ -15,19 +15,37 @@ struct project_time_simulator
     struct context
     {
         mut_real sample_rate               = 44100.f;
-        mut_real simulated_project_time    = 0.f;
         mut_real samples_per_beat_inverted = 0.f;
         mut_real tempo                     = 120.f;
-        mut_real project_time_music        = 0.0;
     };
 
+    /**
+     * @brief Creates a usable context
+     *
+     * @return context
+     */
     static context create();
 
-    static void update(context& cx, double project_time_music, double tempo);
-    static real get_project_time_music(context const& cx);
-    static void increment(context& cx, i32 block_size);
+    /**
+     * @brief Updates tempo and project time. Only call this when transport is
+     * running.
+     *
+     * @param project_time_music Project time of the host in quarter notes
+     * @param tempo Tempo of the host
+     * @return Returns the project time
+     */
+    static real update(context& cx, double project_time_music, double tempo);
+
+    /**
+     * @brief
+     *
+     * @param project_time_music Current internal project time to be advanced.
+     * @param block_size The number of samples to advance.
+     * @return Returns the advanced project time.
+     */
+    static real advance(context& cx, real project_time_music, i32 block_size);
+
     static void set_sample_rate(context& cx, real sample_rate);
-    static void reset(context& cx);
 };
 
 //-----------------------------------------------------------------------------
