@@ -14,11 +14,11 @@ struct project_time_simulator
 {
     struct context
     {
-        mut_real m_sample_rate               = 44100.f;
-        mut_real m_simulated_project_time    = 0.f;
-        mut_real m_samples_per_beat_inverted = 0.f;
-        mut_real m_tempo                     = 120.f;
-        mut_real m_project_time_music        = 0.0;
+        mut_real sample_rate               = 44100.f;
+        mut_real simulated_project_time    = 0.f;
+        mut_real samples_per_beat_inverted = 0.f;
+        mut_real tempo                     = 120.f;
+        mut_real project_time_music        = 0.0;
     };
 
     static context create();

@@ -8,8 +8,7 @@ namespace {
 //-----------------------------------------------------------------------------
 void recalc_samples_per_beat_inverted(project_time_simulator::context& cx)
 {
-    cx.m_samples_per_beat_inverted =
-        cx.m_tempo / (real(60.) * cx.m_sample_rate);
+    cx.samples_per_beat_inverted = cx.tempo / (real(60.) * cx.sample_rate);
 }
 
 //-----------------------------------------------------------------------------
@@ -18,20 +17,20 @@ void update_project_time_music(project_time_simulator::context& cx,
 {
     // When the transports project_time_music from host does not change
     // we assume that transport has stopped.
-    if (cx.m_project_time_music == project_time_music)
+    if (cx.project_time_music == project_time_music)
         return;
 
-    cx.m_project_time_music     = project_time_music;
-    cx.m_simulated_project_time = project_time_music;
+    cx.project_time_music     = project_time_music;
+    cx.simulated_project_time = project_time_music;
 }
 
 //-----------------------------------------------------------------------------
 void update_tempo(project_time_simulator::context& cx, real tempo)
 {
-    if (tempo == cx.m_tempo)
+    if (tempo == cx.tempo)
         return;
 
-    cx.m_tempo = tempo;
+    cx.tempo = tempo;
     recalc_samples_per_beat_inverted(cx);
 }
 
@@ -49,7 +48,7 @@ static project_time_simulator::context create()
 //-----------------------------------------------------------------------------
 void project_time_simulator::set_sample_rate(context& cx, real sample_rate)
 {
-    cx.m_sample_rate = sample_rate;
+    cx.sample_rate = sample_rate;
     recalc_samples_per_beat_inverted(cx);
 }
 
@@ -65,20 +64,20 @@ void project_time_simulator::update(context& cx,
 //-----------------------------------------------------------------------------
 real project_time_simulator::get_project_time_music(context const& cx)
 {
-    return cx.m_simulated_project_time;
+    return cx.simulated_project_time;
 }
 
 //-----------------------------------------------------------------------------
 void project_time_simulator::increment(context& cx, i32 block_size)
 {
-    cx.m_simulated_project_time +=
-        static_cast<real>(block_size) * cx.m_samples_per_beat_inverted;
+    cx.simulated_project_time +=
+        static_cast<real>(block_size) * cx.samples_per_beat_inverted;
 }
 
 //-----------------------------------------------------------------------------
 void project_time_simulator::reset(context& cx)
 {
-    cx.m_simulated_project_time = 0;
+    cx.simulated_project_time = 0;
 }
 
 //-----------------------------------------------------------------------------
