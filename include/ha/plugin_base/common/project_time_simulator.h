@@ -27,14 +27,15 @@ struct project_time_simulator
     static context create();
 
     /**
-     * @brief Updates tempo and project time. Only call this when transport is
-     * running.
+     * @brief Synchronises to tempo and project time of the host. Only call this
+     * when transport is running.
      *
      * @param project_time_music Project time of the host in quarter notes
-     * @param tempo Tempo of the host
+     * @param tempo Tempo of the host in bpm
      * @return Returns the project time
      */
-    static real update(context& cx, double project_time_music, double tempo);
+    static real
+    synchronise(context& cx, double project_time_music, double tempo);
 
     /**
      * @brief

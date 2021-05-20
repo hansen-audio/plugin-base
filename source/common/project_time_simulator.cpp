@@ -40,9 +40,9 @@ void project_time_simulator::set_sample_rate(context& cx, real sample_rate)
 }
 
 //-----------------------------------------------------------------------------
-real project_time_simulator::update(context& cx,
-                                    double project_time_music,
-                                    double tempo)
+real project_time_simulator::synchronise(context& cx,
+                                         double project_time_music,
+                                         double tempo)
 {
     update_tempo(cx, static_cast<real>(tempo));
     return project_time_music;

@@ -93,29 +93,29 @@ bool copy_outputs(i32 begin,
 bool copy_process_context(Steinberg::Vst::ProcessData& processData,
                           common::context& context)
 {
-    Steinberg::Vst::ProcessContext* pc = processData.processContext;
-    if (!pc)
+    Steinberg::Vst::ProcessContext* pcx = processData.processContext;
+    if (!pcx)
         return false;
 
-    bool is_valid = pc->state & Steinberg::Vst::ProcessContext::kTempoValid;
-    context.m_process_data.tempo = is_valid ? pc->tempo : 120.;
-
-    is_valid = pc->state & Steinberg::Vst::ProcessContext::kContTimeValid;
-    context.m_process_data.continous_time_samples =
-        is_valid ? pc->continousTimeSamples : 0;
-
-    is_valid =
-        pc->state & Steinberg::Vst::ProcessContext::kProjectTimeMusicValid;
-    if (is_valid)
+    if (pcx->state & Steinberg::Vst::ProcessContext::kTempoValid)
     {
-        bool is_playing = pc->state & Steinberg::Vst::ProcessContext::kPlaying;
-        if (is_playing)
-        {
-            context.m_process_data.project_time_music =
-                project_time_simulator::update(context.project_time_cx,
-                                               pc->projectTimeMusic,
-                                               context.m_process_data.tempo);
-        }
+        context.m_process_data.tempo = pcx->tempo;
+    }
+
+    if (pcx->state & Steinberg::Vst::ProcessContext::kContTimeValid)
+    {
+        context.m_process_data.continous_time_samples =
+            pcx->continousTimeSamples;
+    }
+
+    if ((pcx->state & Steinberg::Vst::ProcessContext::kPlaying) &&
+        (pcx->state & Steinberg::Vst::ProcessContext::kProjectTimeMusicValid))
+    {
+        real spt = project_time_simulator::synchronise(
+            context.project_time_cx, pcx->projectTimeMusic,
+            context.m_process_data.tempo);
+
+        context.m_process_data.project_time_music = spt;
     }
 
     return true;
