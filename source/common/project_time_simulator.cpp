@@ -12,16 +12,6 @@ void recalc_samples_per_beat_inverted(project_time_simulator::context& cx)
 }
 
 //-----------------------------------------------------------------------------
-void update_tempo(project_time_simulator::context& cx, real tempo)
-{
-    if (tempo == cx.tempo)
-        return;
-
-    cx.tempo = tempo;
-    recalc_samples_per_beat_inverted(cx);
-}
-
-//-----------------------------------------------------------------------------
 } // namespace
 
 //-----------------------------------------------------------------------------
@@ -40,11 +30,8 @@ void project_time_simulator::set_sample_rate(context& cx, real sample_rate)
 }
 
 //-----------------------------------------------------------------------------
-real project_time_simulator::synchronise(context& cx,
-                                         double project_time_music,
-                                         double tempo)
+real project_time_simulator::synchronise(context& cx, double project_time_music)
 {
-    update_tempo(cx, static_cast<real>(tempo));
     return project_time_music;
 }
 
@@ -56,6 +43,16 @@ real project_time_simulator::advance(context& cx,
 
     real delta = static_cast<real>(block_size) * cx.samples_per_beat_inverted;
     return project_time_music + delta;
+}
+
+//-----------------------------------------------------------------------------
+void project_time_simulator::update_tempo(context& cx, real value)
+{
+    if (value == cx.tempo)
+        return;
+
+    cx.tempo = value;
+    recalc_samples_per_beat_inverted(cx);
 }
 
 //-----------------------------------------------------------------------------

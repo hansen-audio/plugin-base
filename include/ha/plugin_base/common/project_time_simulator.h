@@ -31,11 +31,9 @@ struct project_time_simulator
      * when transport is running.
      *
      * @param project_time_music Project time of the host in quarter notes
-     * @param tempo Tempo of the host in bpm
      * @return Returns the project time
      */
-    static real
-    synchronise(context& cx, double project_time_music, double tempo);
+    static real synchronise(context& cx, double project_time_music);
 
     /**
      * @brief
@@ -46,6 +44,7 @@ struct project_time_simulator
      */
     static real advance(context& cx, real project_time_music, i32 block_size);
 
+    static void update_tempo(context& cx, real value);
     static void set_sample_rate(context& cx, real sample_rate);
 };
 

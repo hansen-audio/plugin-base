@@ -99,7 +99,8 @@ bool copy_process_context(Steinberg::Vst::ProcessData& processData,
 
     if (pcx->state & Steinberg::Vst::ProcessContext::kTempoValid)
     {
-        context.m_process_data.tempo = pcx->tempo;
+        project_time_simulator::update_tempo(context.project_time_cx,
+                                             pcx->tempo);
     }
 
     if (pcx->state & Steinberg::Vst::ProcessContext::kContTimeValid)
@@ -108,12 +109,11 @@ bool copy_process_context(Steinberg::Vst::ProcessData& processData,
             pcx->continousTimeSamples;
     }
 
-    if ((pcx->state & Steinberg::Vst::ProcessContext::kPlaying) &&
-        (pcx->state & Steinberg::Vst::ProcessContext::kProjectTimeMusicValid))
+    if ((pcx->state & (Steinberg::Vst::ProcessContext::kPlaying |
+                       Steinberg::Vst::ProcessContext::kProjectTimeMusicValid)))
     {
-        real spt = project_time_simulator::synchronise(
-            context.project_time_cx, pcx->projectTimeMusic,
-            context.m_process_data.tempo);
+        real spt = project_time_simulator::synchronise(context.project_time_cx,
+                                                       pcx->projectTimeMusic);
 
         context.m_process_data.project_time_music = spt;
     }
