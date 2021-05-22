@@ -191,6 +191,18 @@ bool copy_param_outputs(common::context& cx,
 }
 
 //-----------------------------------------------------------------------------
+void advance_project_time(common::context& cx)
+{
+    // clang-format off
+    cx.process_data.project_time_music = 
+        project_time_simulator::advance(
+            cx.project_time_cx, 
+            cx.process_data.project_time_music,
+            cx.process_data.num_samples);
+    // clang-format on
+}
+
+//-----------------------------------------------------------------------------
 bool process(common::context& cx)
 {
     common::audio_module_visitor process_audio_visitor(
@@ -212,9 +224,7 @@ bool process(common::context& cx)
         });
 
     cx.component->accept(process_audio_visitor);
-    cx.process_data.project_time_music = project_time_simulator::advance(
-        cx.project_time_cx, cx.process_data.project_time_music,
-        cx.process_data.num_samples);
+    advance_project_time(cx);
 
     return true;
 } // namespace vst3
