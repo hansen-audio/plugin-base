@@ -135,24 +135,31 @@ bool copy_param_inputs(i32 begin,
             processData.inputParameterChanges->getParameterCount();
         for (Steinberg::int32 index = 0; index < numParamsChanged; index++)
         {
-            if (auto* paramQueue =
-                    processData.inputParameterChanges->getParameterData(index))
-            {
-                Steinberg::Vst::ParamValue value = 0.;
-                Steinberg::int32 sampleOffset    = 0;
-                Steinberg::int32 const numPoints = paramQueue->getPointCount();
-                if (paramQueue->getPoint(0, sampleOffset, value) !=
-                    Steinberg::kResultOk)
-                    continue;
+            auto* paramQueue =
+                processData.inputParameterChanges->getParameterData(index);
+            if (!paramQueue)
+                continue;
 
-                Steinberg::Vst::ParamID const paramId =
-                    paramQueue->getParameterId();
-                Steinberg::Vst::UnitID const unitId = paramId << 16;
-                audio_modules::tag_type const paramTag =
-                    extract_param_tag(paramId);
-                context.process_data.param_inputs.push_back(
-                    {paramTag, static_cast<float>(value)});
-            }
+            Steinberg::Vst::ParamValue value = 0.;
+            Steinberg::int32 sampleOffset    = 0;
+            Steinberg::int32 const numPoints = paramQueue->getPointCount();
+            if (numPoints <= 0)
+                continue;
+
+            /**
+             * TODO: In order to keep it simple for now, just take the last
+             * point from the queue. Ignore the sample offset as well.
+             */
+            real last_point = numPoints - 1;
+            if (paramQueue->getPoint(last_point, sampleOffset, value) !=
+                Steinberg::kResultOk)
+                continue;
+
+            auto const paramId = paramQueue->getParameterId();
+            audio_modules::tag_type const paramTag = extract_param_tag(paramId);
+
+            context.process_data.param_inputs.push_back(
+                {paramTag, static_cast<float>(value)});
         }
 
         return true;
