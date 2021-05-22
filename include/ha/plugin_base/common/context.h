@@ -17,9 +17,9 @@ namespace common {
  */
 struct context
 {
-    audio_modules_map m_audio_modules;
-    audio_modules::process_data m_process_data;
-    Kompositum::ComponentPtr m_component;
+    audio_modules_map audio_modules;
+    audio_modules::process_data process_data;
+    Kompositum::ComponentPtr component;
     project_time_simulator::context project_time_cx;
 };
 

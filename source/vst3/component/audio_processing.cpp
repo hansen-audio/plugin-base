@@ -20,13 +20,13 @@ bool copy_inputs(i32 begin,
                  Steinberg::Vst::ProcessData& processData,
                  common::context& context)
 {
-    context.m_process_data.num_samples = numSamples;
+    context.process_data.num_samples = numSamples;
 
-    for (i32 bi = 0; bi < context.m_process_data.inputs.size(); ++bi)
+    for (i32 bi = 0; bi < context.process_data.inputs.size(); ++bi)
     {
         if (processData.inputs)
         {
-            auto& bus = context.m_process_data.inputs[bi];
+            auto& bus = context.process_data.inputs[bi];
             if (bi >= processData.numInputs)
                 continue;
 
@@ -59,11 +59,11 @@ bool copy_outputs(i32 begin,
                   common::context& context,
                   Steinberg::Vst::ProcessData& processData)
 {
-    for (i32 bi = 0; bi < context.m_process_data.outputs.size(); ++bi)
+    for (i32 bi = 0; bi < context.process_data.outputs.size(); ++bi)
     {
         if (processData.outputs)
         {
-            auto& bus = context.m_process_data.outputs[bi];
+            auto& bus = context.process_data.outputs[bi];
             if (bi >= processData.numOutputs)
                 continue;
 
@@ -105,8 +105,7 @@ bool copy_process_context(Steinberg::Vst::ProcessData& processData,
 
     if (pcx->state & Steinberg::Vst::ProcessContext::kContTimeValid)
     {
-        context.m_process_data.continous_time_samples =
-            pcx->continousTimeSamples;
+        context.process_data.continous_time_samples = pcx->continousTimeSamples;
     }
 
     if (pcx->state & Steinberg::Vst::ProcessContext::kPlaying)
@@ -116,7 +115,7 @@ bool copy_process_context(Steinberg::Vst::ProcessData& processData,
             real spt = project_time_simulator::synchronise(
                 context.project_time_cx, pcx->projectTimeMusic);
 
-            context.m_process_data.project_time_music = spt;
+            context.process_data.project_time_music = spt;
         }
     }
 
@@ -131,7 +130,7 @@ bool copy_param_changes(i32 begin,
 {
     if (processData.inputParameterChanges)
     {
-        context.m_process_data.param_inputs.clear();
+        context.process_data.param_inputs.clear();
         Steinberg::int32 numParamsChanged =
             processData.inputParameterChanges->getParameterCount();
         for (Steinberg::int32 index = 0; index < numParamsChanged; index++)
@@ -151,7 +150,7 @@ bool copy_param_changes(i32 begin,
                 Steinberg::Vst::UnitID const unitId = paramId << 16;
                 audio_modules::tag_type const paramTag =
                     extract_param_tag(paramId);
-                context.m_process_data.param_inputs.push_back(
+                context.process_data.param_inputs.push_back(
                     {paramTag, static_cast<float>(value)});
             }
         }
@@ -167,18 +166,18 @@ bool process(common::context& context)
 {
     common::audio_module_visitor process_audio_visitor(
         [&](Kompositum::IDType uid, bool is_composite) {
-            auto item = context.m_audio_modules.find(uid);
-            if (item == context.m_audio_modules.end())
+            auto item = context.audio_modules.find(uid);
+            if (item == context.audio_modules.end())
                 return;
 
             if (item->second)
-                item->second->process_audio(context.m_process_data);
+                item->second->process_audio(context.process_data);
         });
 
-    context.m_component->accept(process_audio_visitor);
-    context.m_process_data.project_time_music = project_time_simulator::advance(
-        context.project_time_cx, context.m_process_data.project_time_music,
-        context.m_process_data.num_samples);
+    context.component->accept(process_audio_visitor);
+    context.process_data.project_time_music = project_time_simulator::advance(
+        context.project_time_cx, context.process_data.project_time_music,
+        context.process_data.num_samples);
 
     return true;
 }

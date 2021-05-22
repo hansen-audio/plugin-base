@@ -15,12 +15,14 @@ audio_modules::audio_busses init_busses(Steinberg::Vst::IComponent* component,
     audio_modules::audio_busses new_busses;
 
     for (Steinberg::int32 busIdx = 0;
-         busIdx < component->getBusCount(Steinberg::Vst::MediaTypes::kAudio, dir); ++busIdx)
+         busIdx <
+         component->getBusCount(Steinberg::Vst::MediaTypes::kAudio, dir);
+         ++busIdx)
     {
         audio_modules::audio_bus local_bus;
         Steinberg::Vst::BusInfo bus_info;
-        if (component->getBusInfo(Steinberg::Vst::MediaTypes::kAudio, dir, busIdx, bus_info) !=
-            Steinberg::kResultOk)
+        if (component->getBusInfo(Steinberg::Vst::MediaTypes::kAudio, dir,
+                                  busIdx, bus_info) != Steinberg::kResultOk)
             continue;
 
         local_bus.resize(bus_info.channelCount);
@@ -41,16 +43,17 @@ bool setup_audio_busses(common::context& context,
     if (!component)
         return false;
 
-    context.m_process_data.inputs =
-        init_busses(component, Steinberg::Vst::BusDirections::kInput, max_block_size);
-    context.m_process_data.outputs =
-        init_busses(component, Steinberg::Vst::BusDirections::kOutput, max_block_size);
+    context.process_data.inputs = init_busses(
+        component, Steinberg::Vst::BusDirections::kInput, max_block_size);
+    context.process_data.outputs = init_busses(
+        component, Steinberg::Vst::BusDirections::kOutput, max_block_size);
 
     return true;
 }
 
 //-----------------------------------------------------------------------------
-audio_modules::process_setup create_process_setup(Steinberg::Vst::ProcessSetup const& setup)
+audio_modules::process_setup
+create_process_setup(Steinberg::Vst::ProcessSetup const& setup)
 {
     audio_modules::process_setup ag_setup{
         /*sample_rate   =*/audio_modules::real(setup.sampleRate),
@@ -60,9 +63,11 @@ audio_modules::process_setup create_process_setup(Steinberg::Vst::ProcessSetup c
 }
 
 //-----------------------------------------------------------------------------
-bool setup_processing(common::context& context, Steinberg::Vst::ProcessSetup& processSetup)
+bool setup_processing(common::context& context,
+                      Steinberg::Vst::ProcessSetup& processSetup)
 {
-    audio_modules::process_setup ag_setup = plugin_base::vst3::create_process_setup(processSetup);
+    audio_modules::process_setup ag_setup =
+        plugin_base::vst3::create_process_setup(processSetup);
     common::setup_processing(context, ag_setup);
 
     return true;
