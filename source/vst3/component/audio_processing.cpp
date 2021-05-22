@@ -131,7 +131,7 @@ bool copy_param_changes(i32 begin,
 {
     if (processData.inputParameterChanges)
     {
-        context.m_process_data.mod_data.pin_datas.clear();
+        context.m_process_data.param_inputs.clear();
         Steinberg::int32 numParamsChanged =
             processData.inputParameterChanges->getParameterCount();
         for (Steinberg::int32 index = 0; index < numParamsChanged; index++)
@@ -151,7 +151,7 @@ bool copy_param_changes(i32 begin,
                 Steinberg::Vst::UnitID const unitId = paramId << 16;
                 audio_modules::tag_type const paramTag =
                     extract_param_tag(paramId);
-                context.m_process_data.mod_data.pin_datas.push_back(
+                context.m_process_data.param_inputs.push_back(
                     {paramTag, static_cast<float>(value)});
             }
         }

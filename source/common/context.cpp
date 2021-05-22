@@ -14,7 +14,7 @@ void add_param_change(common::context& cx,
                       audio_modules::tag_type pin_tag,
                       audio_modules::real value)
 {
-    cx.m_process_data.mod_data.pin_datas.push_back({pin_tag, value});
+    cx.m_process_data.param_inputs.push_back({pin_tag, value});
 }
 
 //-----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ void setup_context(common::context& cx,
 {
     create_audio_modules_map(cx, component_def);
     cx.m_component = Kompositum::buildComposite(0, tree_def);
-    cx.m_process_data.mod_data.pin_datas.reserve(256); // TODO
+    cx.m_process_data.param_inputs.reserve(256); // TODO
 }
 
 //------------------------------------------------------------------------
