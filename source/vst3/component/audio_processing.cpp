@@ -175,17 +175,35 @@ bool copy_param_outputs(common::context& cx,
     if (cx.process_data.param_outputs.empty())
         return true;
 
-    for (auto const& pc : cx.process_data.param_outputs)
+    /**
+     * TODO: Is this a good solution for now? Get out the last param change for
+     * each param and push it into the VST 3 param queue.
+     */
+    while (!cx.process_data.param_outputs.empty())
     {
+        auto const last = cx.process_data.param_outputs.back();
+
+        // Remove all other param changes of 'last.tag'.
+        for (auto it = cx.process_data.param_outputs.begin();
+             it != cx.process_data.param_outputs.end();)
+        {
+            if ((*it).tag == last.tag)
+                it = cx.process_data.param_outputs.erase(it);
+            else
+                ++it;
+        }
+
         Steinberg::int32 index = -1;
-        auto* queue =
-            processData.outputParameterChanges->addParameterData(pc.tag, index);
+        auto* queue = processData.outputParameterChanges->addParameterData(
+            last.tag, index);
 
         if (!queue)
             continue;
 
-        queue->addPoint(0, pc.value, index);
+        queue->addPoint(0, last.value, index);
     }
+
+    cx.process_data.param_outputs.clear();
 
     return true;
 }
@@ -214,12 +232,15 @@ bool process(common::context& cx)
             if (!item->second)
                 return;
 
-            cx.process_data.param_outputs.clear();
             item->second->process_audio(cx.process_data);
-            if (!cx.process_data.param_outputs.empty())
+
+            /**
+             * Add unit ID to all param changes in order to make th einternal
+             * tag a VST 3 ParamID.
+             */
+            for (auto& p : cx.process_data.param_outputs)
             {
-                auto& pc = cx.process_data.param_outputs[0];
-                pc.tag |= uid << 16;
+                p.tag |= uid << 16;
             }
         });
 
