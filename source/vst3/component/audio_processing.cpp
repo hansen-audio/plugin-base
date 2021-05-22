@@ -123,10 +123,10 @@ bool copy_process_context(Steinberg::Vst::ProcessData& processData,
 }
 
 //-----------------------------------------------------------------------------
-bool copy_param_changes(i32 begin,
-                        i32 numSamples,
-                        Steinberg::Vst::ProcessData& processData,
-                        common::context& context)
+bool copy_param_inputs(i32 begin,
+                       i32 numSamples,
+                       Steinberg::Vst::ProcessData& processData,
+                       common::context& context)
 {
     if (processData.inputParameterChanges)
     {
@@ -162,31 +162,61 @@ bool copy_param_changes(i32 begin,
 }
 
 //-----------------------------------------------------------------------------
-bool process(common::context& context)
+bool copy_param_outputs(common::context& cx,
+                        Steinberg::Vst::ProcessData& processData)
 {
-    common::audio_module_visitor process_audio_visitor(
-        [&](Kompositum::IDType uid, bool is_composite) {
-            auto item = context.audio_modules.find(uid);
-            if (item == context.audio_modules.end())
-                return;
+    if (cx.process_data.param_outputs.empty())
+        return true;
 
-            if (item->second)
-                item->second->process_audio(context.process_data);
-        });
+    for (auto const& pc : cx.process_data.param_outputs)
+    {
+        Steinberg::int32 index = -1;
+        auto* queue =
+            processData.outputParameterChanges->addParameterData(pc.tag, index);
 
-    context.component->accept(process_audio_visitor);
-    context.process_data.project_time_music = project_time_simulator::advance(
-        context.project_time_cx, context.process_data.project_time_music,
-        context.process_data.num_samples);
+        if (!queue)
+            continue;
+
+        queue->addPoint(0, pc.value, index);
+    }
 
     return true;
 }
 
 //-----------------------------------------------------------------------------
+bool process(common::context& cx)
+{
+    common::audio_module_visitor process_audio_visitor(
+        [&](Kompositum::IDType uid, bool is_composite) {
+            auto item = cx.audio_modules.find(uid);
+            if (item == cx.audio_modules.end())
+                return;
+
+            if (!item->second)
+                return;
+
+            cx.process_data.param_outputs.clear();
+            item->second->process_audio(cx.process_data);
+            if (!cx.process_data.param_outputs.empty())
+            {
+                auto& pc = cx.process_data.param_outputs[0];
+                pc.tag |= uid << 16;
+            }
+        });
+
+    cx.component->accept(process_audio_visitor);
+    cx.process_data.project_time_music = project_time_simulator::advance(
+        cx.project_time_cx, cx.process_data.project_time_music,
+        cx.process_data.num_samples);
+
+    return true;
+} // namespace vst3
+
+//-----------------------------------------------------------------------------
 bool process_audio(common::context& context,
                    Steinberg::Vst::ProcessData& processData)
 {
-    copy_param_changes(0, 0, processData, context);
+    copy_param_inputs(0, 0, processData, context);
     copy_process_context(processData, context);
 
     common::slice(processData.numSamples, [&](i32 begin, i32 numSamples) {
@@ -194,6 +224,8 @@ bool process_audio(common::context& context,
         process(context);
         copy_outputs(begin, numSamples, context, processData);
     });
+
+    copy_param_outputs(context, processData);
 
     return true;
 }

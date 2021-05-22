@@ -57,7 +57,8 @@ void setup_context(common::context& cx,
 {
     create_audio_modules_map(cx, component_def);
     cx.component = Kompositum::buildComposite(0, tree_def);
-    cx.process_data.param_inputs.reserve(256); // TODO
+    cx.process_data.param_inputs.reserve(256);  // TODO
+    cx.process_data.param_outputs.reserve(256); // TODO
 }
 
 //------------------------------------------------------------------------
