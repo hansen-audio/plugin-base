@@ -17,14 +17,19 @@ GenericParam* GenericParam::create(Steinberg::Vst::UnitID unitId,
                                    audio_modules::param_info const& param_info)
 {
     auto const& converter =
-        audio_modules::module_factory::convert_funcs(nodeTag).at(param_info.convert_tag);
+        audio_modules::module_factory::convert_funcs(nodeTag).at(
+            param_info.convert_tag);
 
     Steinberg::Vst::ParameterInfo info;
     info.defaultNormalizedValue = param_info.default_normalised;
-    info.flags                  = Steinberg::Vst::ParameterInfo::kCanAutomate;
-    info.id                     = build_param_id(unitId, param_info.param_tag);
-    info.stepCount              = converter.num_steps();
-    info.unitId                 = unitId;
+    info.flags                  = 0;
+    if (param_info.is_read_only)
+        info.flags |= Steinberg::Vst::ParameterInfo::kIsReadOnly;
+    else
+        info.flags |= Steinberg::Vst::ParameterInfo::kCanAutomate;
+    info.id        = build_param_id(unitId, param_info.param_tag);
+    info.stepCount = converter.num_steps();
+    info.unitId    = unitId;
     VST3::StringConvert::convert(std::string(param_info.units), info.units);
     VST3::StringConvert::convert(std::string(param_info.name), info.title);
 
@@ -51,7 +56,14 @@ GenericParam::GenericParam(const Steinberg::Vst::TChar* title,
                            Steinberg::int32 flags,
                            Steinberg::Vst::UnitID unitID,
                            const Steinberg::Vst::TChar* shortTitle)
-: Parameter(title, tag, units, defaultValueNormalized, stepCount, flags, unitID, shortTitle)
+: Parameter(title,
+            tag,
+            units,
+            defaultValueNormalized,
+            stepCount,
+            flags,
+            unitID,
+            shortTitle)
 {
 }
 
@@ -93,7 +105,8 @@ bool GenericParam::fromString(const Steinberg::Vst::TChar* string,
 }
 
 //-----------------------------------------------------------------------------
-Steinberg::Vst::ParamValue GenericParam::toPlain(Steinberg::Vst::ParamValue valueNormalized) const
+Steinberg::Vst::ParamValue
+GenericParam::toPlain(Steinberg::Vst::ParamValue valueNormalized) const
 {
     using amf = audio_modules::module_factory;
 
@@ -105,7 +118,8 @@ Steinberg::Vst::ParamValue GenericParam::toPlain(Steinberg::Vst::ParamValue valu
 }
 
 //-----------------------------------------------------------------------------
-Steinberg::Vst::ParamValue GenericParam::toNormalized(Steinberg::Vst::ParamValue plainValue) const
+Steinberg::Vst::ParamValue
+GenericParam::toNormalized(Steinberg::Vst::ParamValue plainValue) const
 {
     using amf = audio_modules::module_factory;
 
@@ -123,9 +137,11 @@ void GenericParam::createParameters(Steinberg::Vst::UnitID unitId,
 {
     using amf = audio_modules::module_factory;
 
-    for (audio_modules::param_info const& param_info : amf::param_infos(audioNodeTag))
+    for (audio_modules::param_info const& param_info :
+         amf::param_infos(audioNodeTag))
     {
-        GenericParam* genericParam = GenericParam::create(unitId, audioNodeTag, param_info);
+        GenericParam* genericParam =
+            GenericParam::create(unitId, audioNodeTag, param_info);
 
         if (func)
             func(genericParam); // takes ownership
@@ -141,7 +157,8 @@ void GenericParam::setConvertTag(audio_modules::module_tags nodeTag,
 }
 
 //-----------------------------------------------------------------------------
-void GenericParam::createParameters(entity_component_def const& def, ParamCreatedFunc func)
+void GenericParam::createParameters(entity_component_def const& def,
+                                    ParamCreatedFunc func)
 {
     for (const auto& element : def)
     {
