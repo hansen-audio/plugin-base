@@ -33,7 +33,7 @@ struct project_time_simulator
      * @param project_time_music Project time of the host in quarter notes
      * @return Returns the project time
      */
-    static real synchronise(context& cx, double project_time_music);
+    static real synchronise(context const& cx, double project_time_music);
 
     /**
      * @brief
@@ -42,7 +42,8 @@ struct project_time_simulator
      * @param block_size The number of samples to advance.
      * @return Returns the advanced project time.
      */
-    static real advance(context& cx, real project_time_music, i32 block_size);
+    static real
+    advance(context const& cx, real project_time_music, i32 block_size);
 
     static void update_tempo(context& cx, real value);
     static void set_sample_rate(context& cx, real sample_rate);
