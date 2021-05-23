@@ -128,44 +128,43 @@ bool copy_param_inputs(i32 begin,
                        Steinberg::Vst::ProcessData& processData,
                        common::context& context)
 {
-    if (processData.inputParameterChanges)
+    if (!processData.inputParameterChanges)
+        return false;
+
+    context.process_data.param_inputs.clear();
+
+    Steinberg::int32 numParamsChanged =
+        processData.inputParameterChanges->getParameterCount();
+    for (Steinberg::int32 index = 0; index < numParamsChanged; index++)
     {
-        context.process_data.param_inputs.clear();
-        Steinberg::int32 numParamsChanged =
-            processData.inputParameterChanges->getParameterCount();
-        for (Steinberg::int32 index = 0; index < numParamsChanged; index++)
-        {
-            auto* paramQueue =
-                processData.inputParameterChanges->getParameterData(index);
-            if (!paramQueue)
-                continue;
+        auto* paramQueue =
+            processData.inputParameterChanges->getParameterData(index);
+        if (!paramQueue)
+            continue;
 
-            Steinberg::Vst::ParamValue value = 0.;
-            Steinberg::int32 sampleOffset    = 0;
-            Steinberg::int32 const numPoints = paramQueue->getPointCount();
-            if (numPoints <= 0)
-                continue;
+        Steinberg::Vst::ParamValue value = 0.;
+        Steinberg::int32 sampleOffset    = 0;
+        Steinberg::int32 const numPoints = paramQueue->getPointCount();
+        if (numPoints <= 0)
+            continue;
 
-            /**
-             * TODO: In order to keep it simple for now, just take the last
-             * point from the queue. Ignore the sample offset as well.
-             */
-            real last_point = numPoints - 1;
-            if (paramQueue->getPoint(last_point, sampleOffset, value) !=
-                Steinberg::kResultOk)
-                continue;
+        /**
+         * TODO: In order to keep it simple for now, just take the last
+         * point from the queue. Ignore the sample offset as well.
+         */
+        real last_point = numPoints - 1;
+        if (paramQueue->getPoint(last_point, sampleOffset, value) !=
+            Steinberg::kResultOk)
+            continue;
 
-            auto const paramId = paramQueue->getParameterId();
-            audio_modules::tag_type const paramTag = extract_param_tag(paramId);
+        auto const paramId  = paramQueue->getParameterId();
+        auto const paramTag = extract_param_tag(paramId);
 
-            context.process_data.param_inputs.push_back(
-                {paramTag, static_cast<float>(value)});
-        }
-
-        return true;
+        context.process_data.param_inputs.push_back(
+            {paramTag, static_cast<float>(value)});
     }
 
-    return false;
+    return true;
 }
 
 //-----------------------------------------------------------------------------
