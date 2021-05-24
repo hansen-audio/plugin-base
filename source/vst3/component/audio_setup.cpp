@@ -3,9 +3,7 @@
 #include "ha/plugin_base/vst3/component/audio_setup.h"
 //#include "pluginterfaces/vst/ivstprocesscontext.h"
 
-namespace ha {
-namespace plugin_base {
-namespace vst3 {
+namespace ha::plugin_base::vst3 {
 
 //-----------------------------------------------------------------------------
 audio_modules::audio_busses init_busses(Steinberg::Vst::IComponent* component,
@@ -86,6 +84,4 @@ bool setup_processing(common::context& context,
 }
 
 //-----------------------------------------------------------------------------
-} // namespace vst3
-} // namespace plugin_base
-} // namespace ha
+} // namespace ha::plugin_base::vst3

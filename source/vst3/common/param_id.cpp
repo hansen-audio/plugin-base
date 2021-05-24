@@ -5,9 +5,7 @@
 #include "ha/plugin_base/core/types.h"
 #include <assert.h>
 
-namespace ha {
-namespace plugin_base {
-namespace vst3 {
+namespace ha::plugin_base::vst3 {
 
 //-----------------------------------------------------------------------------
 constexpr i32 MASK      = 0xFFFF;
@@ -29,6 +27,4 @@ audio_modules::tag_type extract_param_tag(Steinberg::Vst::ParamID param_id)
 }
 
 //-----------------------------------------------------------------------------
-} // namespace vst3
-} // namespace plugin_base
-} // namespace ha
+} // namespace ha::plugin_base::vst3

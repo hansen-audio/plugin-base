@@ -7,9 +7,7 @@
 #include "public.sdk/source/vst/utility/stringconvert.h"
 #include "vst3/common/param_id.h"
 
-namespace ha {
-namespace plugin_base {
-namespace vst3 {
+namespace ha::plugin_base::vst3 {
 
 //-----------------------------------------------------------------------------
 GenericParam* GenericParam::create(Steinberg::Vst::UnitID unitId,
@@ -168,6 +166,4 @@ void GenericParam::createParameters(entity_component_def const& def,
     }
 }
 //-----------------------------------------------------------------------------
-} // namespace vst3
-} // namespace plugin_base
-} // namespace ha
+} // namespace ha::plugin_base::vst3

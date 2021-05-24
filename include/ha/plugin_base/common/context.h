@@ -7,9 +7,7 @@
 #include "ha/plugin_base/core/types.h"
 #include "kompositum/component.h"
 
-namespace ha {
-namespace plugin_base {
-namespace common {
+namespace ha::plugin_base::common {
 
 //-----------------------------------------------------------------------------
 /**
@@ -41,6 +39,4 @@ void setup_processing(context& cx, audio_modules::process_setup& setup);
 bool process_audio(context& cx, audio_busses& host_buffers, i32 numSamples);
 
 //-----------------------------------------------------------------------------
-} // namespace common
-} // namespace plugin_base
-} // namespace ha
+} // namespace ha::plugin_base::common

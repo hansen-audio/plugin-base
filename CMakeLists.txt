@@ -38,7 +38,7 @@ target_link_libraries(plugin-base
 
 target_compile_features(plugin-base
     PUBLIC 
-        cxx_std_11
+        cxx_std_17
 )
 
 # plugin-base_test

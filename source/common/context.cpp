@@ -6,9 +6,8 @@
 #include "kompositum/builder.h"
 #include "slicing.h"
 
-namespace ha {
-namespace plugin_base {
-namespace common {
+namespace ha::plugin_base::common {
+
 //-----------------------------------------------------------------------------
 void add_param_change(common::context& cx,
                       audio_modules::tag_type pin_tag,
@@ -112,6 +111,4 @@ bool process_audio(common::context& cx,
     return true;
 }
 //-----------------------------------------------------------------------------
-} // namespace common
-} // namespace plugin_base
-} // namespace ha
+} // namespace ha::plugin_base::common

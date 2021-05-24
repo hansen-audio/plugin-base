@@ -7,9 +7,7 @@
 #include "pluginterfaces/vst/vsttypes.h"
 #include <assert.h>
 
-namespace ha {
-namespace plugin_base {
-namespace vst3 {
+namespace ha::plugin_base::vst3 {
 
 //-----------------------------------------------------------------------------
 Steinberg::Vst::ParamID build_param_id(Steinberg::Vst::UnitID unit_id,
@@ -18,6 +16,4 @@ Steinberg::Vst::ParamID build_param_id(Steinberg::Vst::UnitID unit_id,
 audio_modules::tag_type extract_param_tag(Steinberg::Vst::ParamID param_id);
 
 //-----------------------------------------------------------------------------
-} // namespace vst3
-} // namespace plugin_base
-} // namespace ha
+} // namespace ha::plugin_base::vst3
