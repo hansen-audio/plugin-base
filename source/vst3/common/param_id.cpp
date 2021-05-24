@@ -17,8 +17,8 @@ constexpr i32 BIT_SHIFT = 16;
 Steinberg::Vst::ParamID build_param_id(Steinberg::Vst::UnitID unit_id,
                                        audio_modules::tag_type param_tag)
 {
-    assert(unit_id < MASK);
-    assert(param_tag < MASK);
+    assert(unit_id & MASK);
+    assert(param_tag & MASK);
     return (unit_id << BIT_SHIFT) | param_tag;
 }
 
