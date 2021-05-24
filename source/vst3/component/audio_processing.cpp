@@ -234,12 +234,12 @@ bool process(common::context& cx)
             item->second->process_audio(cx.process_data);
 
             /**
-             * Add unit ID to all param changes in order to make th einternal
+             * Add unit ID to all param changes in order to make the internal
              * tag a VST 3 ParamID.
              */
             for (auto& p : cx.process_data.param_outputs)
             {
-                p.tag |= uid << 16;
+                p.tag = build_param_id(uid, p.tag);
             }
         });
 
