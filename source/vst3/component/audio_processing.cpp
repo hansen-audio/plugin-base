@@ -172,6 +172,9 @@ bool copy_param_outputs(common::context& cx,
     if (cx.process_data.param_outputs.empty())
         return true;
 
+    if (!processData.outputParameterChanges)
+        return true;
+
     /**
      * TODO: Is this a good solution for now? Get out the last param change for
      * each param and push it into the VST 3 param queue.
