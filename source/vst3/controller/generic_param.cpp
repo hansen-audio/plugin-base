@@ -14,7 +14,7 @@ GenericParam* GenericParam::create(Steinberg::Vst::UnitID unitId,
                                    audio_modules::module_tags nodeTag,
                                    audio_modules::param_info const& param_info)
 {
-    auto const& converter =
+    auto const converter =
         audio_modules::module_factory::convert_funcs(nodeTag).at(
             param_info.convert_tag);
 
@@ -74,7 +74,7 @@ void GenericParam::toString(Steinberg::Vst::ParamValue valueNormalized,
 {
     using amf = audio_modules::module_factory;
 
-    auto const& converter = amf::convert_funcs(nodeTag).at(convertTag);
+    auto const converter = amf::convert_funcs(nodeTag).at(convertTag);
     if (!converter.to_physical || !converter.to_string)
         return;
 
@@ -89,7 +89,7 @@ bool GenericParam::fromString(const Steinberg::Vst::TChar* string,
 {
     using amf = audio_modules::module_factory;
 
-    auto const& converter = amf::convert_funcs(nodeTag).at(convertTag);
+    auto const converter = amf::convert_funcs(nodeTag).at(convertTag);
     if (!converter.from_string || !converter.to_normalised)
         return false;
 
@@ -108,7 +108,7 @@ GenericParam::toPlain(Steinberg::Vst::ParamValue valueNormalized) const
 {
     using amf = audio_modules::module_factory;
 
-    auto const& converter = amf::convert_funcs(nodeTag).at(convertTag);
+    auto const converter = amf::convert_funcs(nodeTag).at(convertTag);
     if (!converter.to_physical)
         return 0;
 
@@ -121,7 +121,7 @@ GenericParam::toNormalized(Steinberg::Vst::ParamValue plainValue) const
 {
     using amf = audio_modules::module_factory;
 
-    auto const& converter = amf::convert_funcs(nodeTag).at(convertTag);
+    auto const converter = amf::convert_funcs(nodeTag).at(convertTag);
     if (!converter.to_normalised)
         return 0;
 
