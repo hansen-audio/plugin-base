@@ -78,8 +78,8 @@ bool copy_outputs(i32 begin,
                 if (!vst_channel)
                     continue;
 
-                channel.resize(numSamples);
-                std::copy(channel.begin(), channel.end(), vst_channel + begin);
+                std::copy(channel.begin(), channel.begin() + numSamples,
+                          vst_channel + begin);
             }
         }
     }
