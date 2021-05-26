@@ -43,8 +43,8 @@ target_compile_features(plugin-base
 
 target_compile_options(plugin-base
     PRIVATE
-     $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wall>
-     $<$<CXX_COMPILER_ID:MSVC>:/W4>
+        $<$<OR:$<CXX_COMPILER_ID:Clang>,$<CXX_COMPILER_ID:AppleClang>,$<CXX_COMPILER_ID:GNU>>:-Wall>
+        $<$<CXX_COMPILER_ID:MSVC>:/W4>
 )
 
 # plugin-base_test
