@@ -20,20 +20,20 @@ bool copy_inputs(i32 begin,
 {
     context.process_data.num_samples = numSamples;
 
-    for (i32 bi = 0; bi < context.process_data.inputs.size(); ++bi)
+    for (std::size_t bi = 0; bi < context.process_data.inputs.size(); ++bi)
     {
         if (processData.inputs)
         {
             auto& bus = context.process_data.inputs[bi];
-            if (bi >= processData.numInputs)
+            if (bi >= std::size_t(processData.numInputs))
                 continue;
 
             Steinberg::Vst::AudioBusBuffers vst_bus = processData.inputs[bi];
 
-            for (i32 ci = 0; ci < bus.size(); ++ci)
+            for (std::size_t ci = 0; ci < bus.size(); ++ci)
             {
                 auto& channel = bus[ci];
-                if (ci >= vst_bus.numChannels)
+                if (ci >= std::size_t(vst_bus.numChannels))
                     continue;
 
                 Steinberg::Vst::Sample32* vst_channel =
@@ -57,20 +57,20 @@ bool copy_outputs(i32 begin,
                   common::context& context,
                   Steinberg::Vst::ProcessData& processData)
 {
-    for (i32 bi = 0; bi < context.process_data.outputs.size(); ++bi)
+    for (std::size_t bi = 0; bi < context.process_data.outputs.size(); ++bi)
     {
         if (processData.outputs)
         {
             auto& bus = context.process_data.outputs[bi];
-            if (bi >= processData.numOutputs)
+            if (bi >= std::size_t(processData.numOutputs))
                 continue;
 
             Steinberg::Vst::AudioBusBuffers vst_bus = processData.outputs[bi];
 
-            for (i32 ci = 0; ci < bus.size(); ++ci)
+            for (std::size_t ci = 0; ci < bus.size(); ++ci)
             {
                 auto& channel = bus[ci];
-                if (ci >= vst_bus.numChannels)
+                if (ci >= std::size_t(vst_bus.numChannels))
                     continue;
 
                 Steinberg::Vst::Sample32* vst_channel =

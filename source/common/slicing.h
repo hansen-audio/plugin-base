@@ -8,15 +8,15 @@ namespace ha::plugin_base::common {
 
 //-----------------------------------------------------------------------------
 template <typename T, typename Func, std::size_t N = 32>
-void slice(T total, const Func& func)
+void slice(T const _total, const Func& func)
 {
-    static_assert(std::is_signed<T>::value, "Must be SIGNED type!");
     static_assert(std::is_integral<T>::value, "Must be INTEGRAL type!");
 
-    T begin = 0;
+    std::size_t begin = 0;
+    std::size_t total = std::size_t(_total);
     while (total > 0)
     {
-        i32 num_samples = total < N ? total : N;
+        std::size_t num_samples = total < N ? total : N;
         func(begin, num_samples);
 
         total -= num_samples;
