@@ -27,7 +27,9 @@ GenericParam* GenericParam::create(Steinberg::Vst::UnitID unitId,
         info.flags |= Steinberg::Vst::ParameterInfo::kCanAutomate;
     info.id        = build_param_id(unitId, param_info.param_tag);
     info.stepCount = converter.num_steps();
-    info.unitId    = unitId;
+    if (info.stepCount > 1)
+        info.flags |= Steinberg::Vst::ParameterInfo::kIsList;
+    info.unitId = unitId;
     VST3::StringConvert::convert(std::string(param_info.units), info.units);
     VST3::StringConvert::convert(std::string(param_info.name), info.title);
 
