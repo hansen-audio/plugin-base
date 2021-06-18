@@ -30,19 +30,19 @@ void project_time_simulator::set_sample_rate(context& cx, real sample_rate)
 }
 
 //-----------------------------------------------------------------------------
-real project_time_simulator::synchronise(context const& cx,
-                                         double project_time_music)
+f64 project_time_simulator::synchronise(context const& cx,
+                                        f64 project_time_music)
 {
     return project_time_music;
 }
 
 //-----------------------------------------------------------------------------
-real project_time_simulator::advance(context const& cx,
-                                     real project_time_music,
-                                     i32 block_size)
+f64 project_time_simulator::advance(context const& cx,
+                                    f64 project_time_music,
+                                    i32 block_size)
 {
 
-    real delta = static_cast<real>(block_size) * cx.samples_per_beat_inverted;
+    f64 delta = static_cast<f64>(block_size) * cx.samples_per_beat_inverted;
     return project_time_music + delta;
 }
 

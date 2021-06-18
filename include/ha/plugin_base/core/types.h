@@ -19,6 +19,7 @@ namespace plugin_base {
 using real                  = float const;
 using mut_real              = std::remove_const<real>::type;
 using i32                   = std::int32_t;
+using f64                   = double;
 using IDType                = std::uint64_t;
 using parent_child_tree_def = std::multimap<IDType, IDType>;
 using entity_component_def  = std::map<IDType, audio_modules::module_tags>;

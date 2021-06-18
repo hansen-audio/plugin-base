@@ -110,7 +110,7 @@ bool copy_process_context(Steinberg::Vst::ProcessData& processData,
     {
         if (pcx->state & Steinberg::Vst::ProcessContext::kProjectTimeMusicValid)
         {
-            real spt = project_time_simulator::synchronise(
+            f64 spt = project_time_simulator::synchronise(
                 context.project_time_cx, pcx->projectTimeMusic);
 
             context.process_data.project_time_music = spt;
