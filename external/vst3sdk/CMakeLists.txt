@@ -6,7 +6,7 @@ FetchContent_Declare(
     vst3sdk
     # GIT_REPOSITORY ${HA_GIT_REPOSITORY_URL}/steinbergmedia/vst3sdk.git
     GIT_REPOSITORY https://www.github.com/steinbergmedia/vst3sdk.git
-    GIT_TAG v3.7.2_build_28
+    GIT_TAG v3.7.3_build_20
 )
 
 # Disable annoying validator once and for all!!!
@@ -19,4 +19,4 @@ endif()
 FetchContent_MakeAvailable(vst3sdk)
 
 # Solve problem with public_sdk_SOURCE_DIR not being defined when using smtg_enable_vst3_sdk().
-set(vst3sdk_SOURCE_DIR ${vst3sdk_SOURCE_DIR} CACHE INTERNAL "VST 3 SDK source directory.") 
+# set(vst3sdk_SOURCE_DIR ${vst3sdk_SOURCE_DIR} CACHE INTERNAL "VST 3 SDK source directory.") 
