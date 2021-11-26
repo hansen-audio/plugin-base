@@ -6,18 +6,18 @@
 namespace ha::plugin_base::vst3 {
 
 //-----------------------------------------------------------------------------
-audio_modules::audio_busses init_busses(Steinberg::Vst::IComponent* component,
-                                        Steinberg::Vst::BusDirection dir,
-                                        Steinberg::int32 maxBlockSize)
+audio_modules::AudioBusses init_busses(Steinberg::Vst::IComponent* component,
+                                       Steinberg::Vst::BusDirection dir,
+                                       Steinberg::int32 maxBlockSize)
 {
-    audio_modules::audio_busses new_busses;
+    audio_modules::AudioBusses new_busses;
 
     for (Steinberg::int32 busIdx = 0;
          busIdx <
          component->getBusCount(Steinberg::Vst::MediaTypes::kAudio, dir);
          ++busIdx)
     {
-        audio_modules::audio_bus local_bus;
+        audio_modules::AudioBus local_bus;
         Steinberg::Vst::BusInfo bus_info;
         if (component->getBusInfo(Steinberg::Vst::MediaTypes::kAudio, dir,
                                   busIdx, bus_info) != Steinberg::kResultOk)
@@ -50,10 +50,10 @@ bool setup_audio_busses(common::context& context,
 }
 
 //-----------------------------------------------------------------------------
-audio_modules::process_setup
+audio_modules::ProcessSetup
 create_process_setup(Steinberg::Vst::ProcessSetup const& setup)
 {
-    audio_modules::process_setup ag_setup{
+    audio_modules::ProcessSetup ag_setup{
         /*sample_rate   =*/audio_modules::real(setup.sampleRate),
         /*block_size    =*/setup.maxSamplesPerBlock,
         /*reciprocal_sr =*/audio_modules::real(1. / ag_setup.sample_rate)};
@@ -64,7 +64,7 @@ create_process_setup(Steinberg::Vst::ProcessSetup const& setup)
 bool setup_processing(common::context& context,
                       Steinberg::Vst::ProcessSetup& processSetup)
 {
-    audio_modules::process_setup ag_setup =
+    audio_modules::ProcessSetup ag_setup =
         plugin_base::vst3::create_process_setup(processSetup);
     common::setup_processing(context, ag_setup);
 

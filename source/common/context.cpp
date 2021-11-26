@@ -23,8 +23,8 @@ static void create_audio_modules_map(common::context& cx,
     audio_modules_map nodes_map;
     for (auto const& element : def)
     {
-        auto new_node =
-            audio_modules::module_factory::create_audio_module(element.second);
+        auto new_node = audio_modules::ModuleFactoryImpl::create_audio_module(
+            element.second);
         nodes_map.emplace(element.first, std::move(new_node));
     }
 
@@ -32,7 +32,7 @@ static void create_audio_modules_map(common::context& cx,
 }
 
 //-----------------------------------------------------------------------------
-void setup_processing(common::context& cx, audio_modules::process_setup& setup)
+void setup_processing(common::context& cx, audio_modules::ProcessSetup& setup)
 {
     common::audio_module_visitor process_setup_visitor(
         [&](Kompositum::IDType uid, bool is_composite) {
@@ -62,7 +62,7 @@ void setup_context(common::context& cx,
 
 //------------------------------------------------------------------------
 bool process_audio(common::context& cx,
-                   common::audio_busses& host_buffers,
+                   common::AudioBusses& host_buffers,
                    i32 numSamples)
 {
     common::slice(numSamples, [&](i32 begin, i32 num) {

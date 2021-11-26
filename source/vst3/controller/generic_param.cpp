@@ -11,11 +11,11 @@ namespace ha::plugin_base::vst3 {
 
 //-----------------------------------------------------------------------------
 GenericParam* GenericParam::create(Steinberg::Vst::UnitID unitId,
-                                   audio_modules::module_tags nodeTag,
-                                   audio_modules::param_info const& param_info)
+                                   audio_modules::ModuleTags nodeTag,
+                                   audio_modules::ParamInfo const& param_info)
 {
     auto const converter =
-        audio_modules::module_factory::convert_funcs(nodeTag).at(
+        audio_modules::ModuleFactoryImpl::convert_funcs(nodeTag).at(
             param_info.convert_tag);
 
     Steinberg::Vst::ParameterInfo info;
@@ -74,7 +74,7 @@ GenericParam::~GenericParam() {}
 void GenericParam::toString(Steinberg::Vst::ParamValue valueNormalized,
                             Steinberg::Vst::String128 string) const
 {
-    using amf = audio_modules::module_factory;
+    using amf = audio_modules::ModuleFactoryImpl;
 
     auto const converter = amf::convert_funcs(nodeTag).at(convertTag);
     if (!converter.to_physical || !converter.to_string)
@@ -89,7 +89,7 @@ void GenericParam::toString(Steinberg::Vst::ParamValue valueNormalized,
 bool GenericParam::fromString(const Steinberg::Vst::TChar* string,
                               Steinberg::Vst::ParamValue& valueNormalized) const
 {
-    using amf = audio_modules::module_factory;
+    using amf = audio_modules::ModuleFactoryImpl;
 
     auto const converter = amf::convert_funcs(nodeTag).at(convertTag);
     if (!converter.from_string || !converter.to_normalised)
@@ -108,7 +108,7 @@ bool GenericParam::fromString(const Steinberg::Vst::TChar* string,
 Steinberg::Vst::ParamValue
 GenericParam::toPlain(Steinberg::Vst::ParamValue valueNormalized) const
 {
-    using amf = audio_modules::module_factory;
+    using amf = audio_modules::ModuleFactoryImpl;
 
     auto const converter = amf::convert_funcs(nodeTag).at(convertTag);
     if (!converter.to_physical)
@@ -121,7 +121,7 @@ GenericParam::toPlain(Steinberg::Vst::ParamValue valueNormalized) const
 Steinberg::Vst::ParamValue
 GenericParam::toNormalized(Steinberg::Vst::ParamValue plainValue) const
 {
-    using amf = audio_modules::module_factory;
+    using amf = audio_modules::ModuleFactoryImpl;
 
     auto const converter = amf::convert_funcs(nodeTag).at(convertTag);
     if (!converter.to_normalised)
@@ -132,12 +132,12 @@ GenericParam::toNormalized(Steinberg::Vst::ParamValue plainValue) const
 
 //-----------------------------------------------------------------------------
 void GenericParam::createParameters(Steinberg::Vst::UnitID unitId,
-                                    audio_modules::module_tags audioNodeTag,
+                                    audio_modules::ModuleTags audioNodeTag,
                                     ParamCreatedFunc func)
 {
-    using amf = audio_modules::module_factory;
+    using amf = audio_modules::ModuleFactoryImpl;
 
-    for (audio_modules::param_info const& param_info :
+    for (audio_modules::ParamInfo const& param_info :
          amf::param_infos(audioNodeTag))
     {
         GenericParam* genericParam =
@@ -149,7 +149,7 @@ void GenericParam::createParameters(Steinberg::Vst::UnitID unitId,
 }
 
 //-----------------------------------------------------------------------------
-void GenericParam::setConvertTag(audio_modules::module_tags nodeTag,
+void GenericParam::setConvertTag(audio_modules::ModuleTags nodeTag,
                                  audio_modules::mut_tag_type convertTag)
 {
     this->nodeTag    = nodeTag;
@@ -162,8 +162,8 @@ void GenericParam::createParameters(entity_component_def const& def,
 {
     for (const auto& element : def)
     {
-        Steinberg::Vst::UnitID const unit_id              = element.first;
-        audio_modules::module_tags const audio_module_tag = element.second;
+        Steinberg::Vst::UnitID const unit_id             = element.first;
+        audio_modules::ModuleTags const audio_module_tag = element.second;
         GenericParam::createParameters(unit_id, audio_module_tag, func);
     }
 }

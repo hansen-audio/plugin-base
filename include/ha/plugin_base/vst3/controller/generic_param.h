@@ -11,8 +11,8 @@
 #include <memory>
 
 namespace ha::audio_modules {
-enum class module_tags;
-struct param_info;
+enum class ModuleTags;
+struct ParamInfo;
 } // namespace ha::audio_modules
 
 namespace ha::plugin_base::vst3 {
@@ -23,13 +23,13 @@ class GenericParam : public Steinberg::Vst::Parameter
 public:
     //-------------------------------------------------------------------------
     static GenericParam* create(Steinberg::Vst::UnitID unitID,
-                                audio_modules::module_tags nodeTag,
-                                audio_modules::param_info const& info);
+                                audio_modules::ModuleTags nodeTag,
+                                audio_modules::ParamInfo const& info);
 
     using ParamCreatedFunc = std::function<bool(GenericParam*)>;
 
     static void createParameters(Steinberg::Vst::UnitID unitID,
-                                 audio_modules::module_tags nodeTag,
+                                 audio_modules::ModuleTags nodeTag,
                                  ParamCreatedFunc func);
 
     static void createParameters(entity_component_def const& def,
@@ -63,7 +63,7 @@ public:
     Steinberg::Vst::ParamValue
     toNormalized(Steinberg::Vst::ParamValue plainValue) const override;
 
-    void setConvertTag(audio_modules::module_tags nodeTag,
+    void setConvertTag(audio_modules::ModuleTags nodeTag,
                        audio_modules::mut_tag_type convertTag);
 
     OBJ_METHODS(GenericParam, Steinberg::Vst::Parameter)
@@ -74,7 +74,7 @@ protected:
     Steinberg::int32 precision;
 
 private:
-    audio_modules::module_tags nodeTag;
+    audio_modules::ModuleTags nodeTag;
     audio_modules::mut_tag_type convertTag;
 };
 
