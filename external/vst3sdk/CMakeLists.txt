@@ -6,7 +6,7 @@ FetchContent_Declare(
     vst3sdk
     # GIT_REPOSITORY ${HA_GIT_REPOSITORY_URL}/steinbergmedia/vst3sdk.git
     GIT_REPOSITORY https://www.github.com/steinbergmedia/vst3sdk.git
-    GIT_TAG v3.7.6_build_18
+    GIT_TAG v3.7.7_build_19
 )
 
 # Disable annoying validator once and for all!!!
