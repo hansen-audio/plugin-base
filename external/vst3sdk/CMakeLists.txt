@@ -9,8 +9,10 @@ FetchContent_Declare(
     GIT_TAG v3.7.8_build_34
 )
 
-# Disable annoying validator once and for all!!!
+# Disable some VST 3 SDK stuff
 option(SMTG_RUN_VST_VALIDATOR OFF)
+option(SMTG_ENABLE_VST3_PLUGIN_EXAMPLES "Enable VST 3 Plug-in Examples" OFF)
+option(SMTG_ENABLE_VST3_HOSTING_EXAMPLES "Enable VST 3 Hosting Examples" OFF)
 
 if(WIN32)
     option(SMTG_CREATE_PLUGIN_LINK OFF)
