@@ -3,7 +3,7 @@
 #pragma once
 
 #include "hao/audio_modules/types.h"
-#include "ha/plugin_base/core/types.h"
+#include "hao/plugin_base/core/types.h"
 #include "pluginterfaces/vst/ivsteditcontroller.h"
 #include "pluginterfaces/vst/vsttypes.h"
 #include "public.sdk/source/vst/vstparameters.h"

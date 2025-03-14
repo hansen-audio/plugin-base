@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "ha/plugin_base/core/types.h"
+#include "hao/plugin_base/core/types.h"
 
 namespace ha::plugin_base {
 

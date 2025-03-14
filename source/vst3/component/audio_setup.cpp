@@ -1,6 +1,6 @@
 // Copyright(c) 2021 Hansen Audio.
 
-#include "ha/plugin_base/vst3/component/audio_setup.h"
+#include "hao/plugin_base/vst3/component/audio_setup.h"
 //#include "pluginterfaces/vst/ivstprocesscontext.h"
 
 namespace ha::plugin_base::vst3 {

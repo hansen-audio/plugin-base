@@ -3,8 +3,8 @@
 #pragma once
 
 #include "hao/audio_modules/module.h"
-#include "ha/plugin_base/common/project_time_simulator.h"
-#include "ha/plugin_base/core/types.h"
+#include "hao/plugin_base/common/project_time_simulator.h"
+#include "hao/plugin_base/core/types.h"
 #include "kompositum/component.h"
 
 namespace ha::plugin_base::common {

@@ -2,9 +2,9 @@
 
 #include "common/slicing.h"
 #include "hao/audio_modules/types.h"
-#include "ha/plugin_base/common/audio_module_visitor.h"
-#include "ha/plugin_base/common/context.h"
-#include "ha/plugin_base/core/types.h"
+#include "hao/plugin_base/common/audio_module_visitor.h"
+#include "hao/plugin_base/common/context.h"
+#include "hao/plugin_base/core/types.h"
 #include "pluginterfaces/vst/ivstaudioprocessor.h"
 #include "pluginterfaces/vst/ivstparameterchanges.h"
 #include "pluginterfaces/vst/ivstprocesscontext.h"

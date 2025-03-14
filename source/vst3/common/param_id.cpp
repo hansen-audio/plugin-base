@@ -2,7 +2,7 @@
 
 #include "vst3/common/param_id.h"
 #include "hao/audio_modules/types.h"
-#include "ha/plugin_base/core/types.h"
+#include "hao/plugin_base/core/types.h"
 #include <assert.h>
 
 namespace ha::plugin_base::vst3 {

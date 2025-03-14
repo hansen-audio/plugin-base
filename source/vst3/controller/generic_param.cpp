@@ -1,8 +1,8 @@
 // Copyright(c) 2021 Hansen Audio.
 
-#include "ha/plugin_base/vst3/controller/generic_param.h"
+#include "hao/plugin_base/vst3/controller/generic_param.h"
 #include "hao/audio_modules/audio_modules.h"
-#include "ha/plugin_base/core/types.h"
+#include "hao/plugin_base/core/types.h"
 #include "pluginterfaces/vst/ivsteditcontroller.h"
 #include "public.sdk/source/vst/utility/stringconvert.h"
 #include "vst3/common/param_id.h"

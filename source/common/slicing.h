@@ -1,6 +1,6 @@
 // Copyright(c) 2021 Hansen Audio.
 
-#include "ha/plugin_base/core/types.h"
+#include "hao/plugin_base/core/types.h"
 #include <cstddef>
 #include <numeric>
 
