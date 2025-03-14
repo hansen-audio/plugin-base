@@ -10,12 +10,12 @@
 #include <functional>
 #include <memory>
 
-namespace ha::audio_modules {
+namespace hao::audio_modules {
 enum class ModuleTags;
 struct ParamInfo;
-} // namespace ha::audio_modules
+} // namespace hao::audio_modules
 
-namespace ha::plugin_base::vst3 {
+namespace hao::plugin_base::vst3 {
 
 //-----------------------------------------------------------------------------
 class GenericParam : public Steinberg::Vst::Parameter
@@ -79,4 +79,4 @@ private:
 };
 
 //-----------------------------------------------------------------------------
-} // namespace ha::plugin_base::vst3
+} // namespace hao::plugin_base::vst3

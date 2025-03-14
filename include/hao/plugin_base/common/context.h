@@ -7,7 +7,7 @@
 #include "hao/plugin_base/core/types.h"
 #include "kompositum/component.h"
 
-namespace ha::plugin_base::common {
+namespace hao::plugin_base::common {
 
 //-----------------------------------------------------------------------------
 /**
@@ -39,4 +39,4 @@ void setup_processing(context& cx, audio_modules::ProcessSetup& setup);
 bool process_audio(context& cx, AudioBusses& host_buffers, i32 numSamples);
 
 //-----------------------------------------------------------------------------
-} // namespace ha::plugin_base::common
+} // namespace hao::plugin_base::common

@@ -10,7 +10,7 @@
 #include "pluginterfaces/vst/ivstprocesscontext.h"
 #include "vst3/common/param_id.h"
 
-namespace ha::plugin_base::vst3 {
+namespace hao::plugin_base::vst3 {
 
 //-----------------------------------------------------------------------------
 bool copy_inputs(i32 begin,
@@ -269,4 +269,4 @@ bool process_audio(common::context& context,
 }
 
 //-----------------------------------------------------------------------------
-} // namespace ha::plugin_base::vst3
+} // namespace hao::plugin_base::vst3

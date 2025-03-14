@@ -3,7 +3,7 @@
 #include "hao/plugin_base/common/context.h"
 #include "pluginterfaces/vst/ivstaudioprocessor.h"
 
-namespace ha::plugin_base::vst3 {
+namespace hao::plugin_base::vst3 {
 
 //-----------------------------------------------------------------------------
 bool setup_processing(common::context& context,
@@ -11,4 +11,4 @@ bool setup_processing(common::context& context,
                       Steinberg::Vst::IComponent* component);
 
 //-----------------------------------------------------------------------------
-} // namespace ha::plugin_base::vst3
+} // namespace hao::plugin_base::vst3

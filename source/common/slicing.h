@@ -4,7 +4,7 @@
 #include <cstddef>
 #include <numeric>
 
-namespace ha::plugin_base::common {
+namespace hao::plugin_base::common {
 
 //-----------------------------------------------------------------------------
 template <typename T, typename Func, std::size_t N = 32>
@@ -25,4 +25,4 @@ void slice(T const _total, const Func& func)
 }
 
 //-----------------------------------------------------------------------------
-} // namespace ha::plugin_base::common
+} // namespace hao::plugin_base::common

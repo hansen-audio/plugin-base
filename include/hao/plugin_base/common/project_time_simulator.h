@@ -4,7 +4,7 @@
 
 #include "hao/plugin_base/core/types.h"
 
-namespace ha::plugin_base {
+namespace hao::plugin_base {
 
 /**
  * @brief project_time_simulator
@@ -50,4 +50,4 @@ struct project_time_simulator
 };
 
 //-----------------------------------------------------------------------------
-} // namespace ha::plugin_base
+} // namespace hao::plugin_base

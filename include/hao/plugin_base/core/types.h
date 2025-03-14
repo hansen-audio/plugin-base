@@ -6,7 +6,7 @@
 #include <map>
 #include <memory>
 
-namespace ha {
+namespace hao {
 
 //-----------------------------------------------------------------------------
 namespace audio_modules {
@@ -28,4 +28,4 @@ using audio_modules_map     = std::map<IDType, audio_module_ptr>;
 
 //-----------------------------------------------------------------------------
 } // namespace plugin_base
-} // namespace ha
+} // namespace hao

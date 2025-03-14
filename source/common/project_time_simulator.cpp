@@ -2,7 +2,7 @@
 
 #include "hao/plugin_base/common/project_time_simulator.h"
 
-namespace ha::plugin_base {
+namespace hao::plugin_base {
 namespace {
 
 //-----------------------------------------------------------------------------
@@ -58,4 +58,4 @@ void project_time_simulator::update_tempo(context& cx, real value)
 
 //-----------------------------------------------------------------------------
 
-} // namespace ha::plugin_base
+} // namespace hao::plugin_base

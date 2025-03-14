@@ -6,7 +6,7 @@
 #include "kompositum/leaf.h"
 #include "kompositum/visitor.h"
 
-namespace ha::plugin_base::common {
+namespace hao::plugin_base::common {
 
 //-----------------------------------------------------------------------------
 /**
@@ -60,4 +60,4 @@ void audio_module_visitor<Func>::visit(Kompositum::Composite* composite)
 }
 
 //-----------------------------------------------------------------------------
-} // namespace ha::plugin_base::common
+} // namespace hao::plugin_base::common

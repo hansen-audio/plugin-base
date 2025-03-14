@@ -6,7 +6,7 @@
 #include "kompositum/builder.h"
 #include "slicing.h"
 
-namespace ha::plugin_base::common {
+namespace hao::plugin_base::common {
 
 //-----------------------------------------------------------------------------
 void add_param_change(common::context& cx,
@@ -111,4 +111,4 @@ bool process_audio(common::context& cx,
     return true;
 }
 //-----------------------------------------------------------------------------
-} // namespace ha::plugin_base::common
+} // namespace hao::plugin_base::common
