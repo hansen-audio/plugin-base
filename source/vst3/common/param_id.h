@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "ha/audio_modules/types.h"
+#include "hao/audio_modules/types.h"
 #include "ha/plugin_base/core/types.h"
 #include "pluginterfaces/vst/vsttypes.h"
 #include <assert.h>

@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "ha/audio_modules/module.h"
+#include "hao/audio_modules/module.h"
 #include "ha/plugin_base/common/project_time_simulator.h"
 #include "ha/plugin_base/core/types.h"
 #include "kompositum/component.h"

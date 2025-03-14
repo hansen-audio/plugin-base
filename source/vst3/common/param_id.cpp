@@ -1,7 +1,7 @@
 // Copyright(c) 2021 Hansen Audio.
 
 #include "vst3/common/param_id.h"
-#include "ha/audio_modules/types.h"
+#include "hao/audio_modules/types.h"
 #include "ha/plugin_base/core/types.h"
 #include <assert.h>
 

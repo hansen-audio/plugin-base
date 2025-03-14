@@ -1,7 +1,7 @@
 // Copyright(c) 2021 Hansen Audio.
 
 #include "ha/plugin_base/common/context.h"
-#include "ha/audio_modules/module_factory.h"
+#include "hao/audio_modules/module_factory.h"
 #include "ha/plugin_base/common/audio_module_visitor.h"
 #include "kompositum/builder.h"
 #include "slicing.h"
