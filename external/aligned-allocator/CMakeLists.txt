@@ -4,7 +4,7 @@
 
     FetchContent_Declare(
         aligned-allocator
-        GIT_REPOSITORY ${HA_GIT_REPOSITORY_URL}/hansen-audio/aligned-allocator.git
+        GIT_REPOSITORY https://github.com/hansen-audio/aligned-allocator.git
         GIT_TAG origin/master
     )
 

@@ -4,7 +4,7 @@ include(FetchContent)
 
 FetchContent_Declare(
     audio-modules
-    GIT_REPOSITORY ${HA_GIT_REPOSITORY_URL}/hansen-audio/audio-modules.git
+    GIT_REPOSITORY https://github.com/hansen-audio/audio-modules.git
     GIT_TAG origin/master
 )
 
